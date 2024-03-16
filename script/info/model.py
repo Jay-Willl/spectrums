@@ -1,9 +1,9 @@
 import json
 
 class Movie:
-    def __init__(self, metadata, credits):
+    def __init__(self, metadata, credits, segments):
         self.metadata = metadata
-        self.segments = list()
+        self.segments = segments
         self.credits = credits
 
     def to_json(self):
@@ -21,6 +21,16 @@ class Seg:
         self.id = None
         self.start = None
         self.end = None
-        self.size = tuple()
+        self.size = None
         self.elapse = None
+        self.eigenvalue = None
     
+    def to_json(self):
+        return {
+            "id": self.id,
+            "start": self.start,
+            "end": self.end,
+            "size": self.size,
+            "elapse": self.elapse,
+            "eigenvalue": self.eigenvalue
+        }

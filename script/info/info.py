@@ -5,6 +5,7 @@ import tmdbsimple as tmdb
 from icecream import ic
 
 from model import Movie
+from extract import entry
 
 tmdb.API_KEY = 'eb21fed20fe45dd84ca95914f57fcc86'
 tmdb.REQUESTS_TIMEOUT = 5
@@ -28,6 +29,10 @@ def get_credits(CREDITS_URL=DEFAULT_CREDITS_URL):
     ret_credits_str = json.dumps(raw_credits_json.get('cast'))
     return json.loads(ret_credits_str)
 
+def get_segments(movie_title):
+    return entry(movie_title)
+
+
 def test():
     search = tmdb.Search()
     response = search.movie(query='Pulp Fiction')
@@ -50,7 +55,8 @@ def dump_info(movie_title):
     METADATA_URL = f"https://api.themoviedb.org/3/movie/{MOVIE_ID}?language=en-US"
     CREDITS_URL = f"https://api.themoviedb.org/3/movie/{MOVIE_ID}/credits?language=en-US"
     
-    movie = Movie(get_metadata(), get_credits())
+    movie = Movie(get_metadata(), get_credits(), get_segments(movie_title))
+
     return movie.to_json()
 
 
